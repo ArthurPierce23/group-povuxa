@@ -2,7 +2,7 @@
   "id": "group-povuxa",
   "title": "Group Po'Vuxa — Party Formation",
   "description": "Party formation and movement module. Gather your party into one token, move, and deploy strategically in formations like Line, Wedge, or Custom layouts. / Модуль для группового перемещения. Соберите отряд в один токен и разворачивайте боевые построения.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "compatibility": {
     "minimum": "13",
     "verified": "13",
