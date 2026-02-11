@@ -1,0 +1,215 @@
+/**
+ * Group Po'Vuxa — Animations
+ * Smooth, modern micro-interactions
+ */
+
+/* === TOKEN APPEAR / DISAPPEAR === */
+@keyframes token-appear {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+        filter: blur(4px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: scale(1.08);
+        filter: blur(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes token-disappear {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    40% {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.2);
+        filter: blur(4px);
+    }
+}
+
+/* === PARTY TOKEN PULSE === */
+@keyframes party-token-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 6px rgba(245, 158, 11, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 18px rgba(245, 158, 11, 0.6);
+    }
+}
+
+.party-token-active {
+    animation: party-token-pulse 2.5s ease-in-out infinite;
+}
+
+/* === DRAG & DROP === */
+@keyframes drag-wobble {
+
+    0%,
+    100% {
+        transform: rotate(0deg) scale(1.02);
+    }
+
+    25% {
+        transform: rotate(-1.5deg) scale(1.02);
+    }
+
+    75% {
+        transform: rotate(1.5deg) scale(1.02);
+    }
+}
+
+.group-povuxa .member-item.dragging {
+    animation: drag-wobble 0.25s ease-in-out infinite;
+}
+
+/* === BUTTON INTERACTIONS === */
+@keyframes button-press {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.96);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.group-povuxa .action-btn:active:not(:disabled) {
+    animation: button-press 0.12s ease-out;
+}
+
+/* === PANEL ENTRANCE === */
+@keyframes panel-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.group-povuxa.party-panel .window-content {
+    animation: panel-fade-in 0.2s ease-out;
+}
+
+/* === LOADING SPINNER === */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.group-povuxa .loading-spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgba(245, 158, 11, 0.15);
+    border-top-color: #f59e0b;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+/* === SUCCESS FLASH === */
+@keyframes success-flash {
+    0% {
+        background-color: rgba(16, 185, 129, 0.3);
+        box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+    }
+
+    100% {
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
+
+.group-povuxa .action-success {
+    animation: success-flash 0.6s ease-out;
+}
+
+/* === WARNING SHAKE === */
+@keyframes warning-shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20%,
+    60% {
+        transform: translateX(-4px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(4px);
+    }
+}
+
+.group-povuxa .action-warning {
+    animation: warning-shake 0.35s ease-out;
+}
+
+/* === GRID CELL DROP PULSE === */
+@keyframes grid-cell-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+    }
+}
+
+.grid-cell.just-dropped {
+    animation: grid-cell-pulse 0.5s ease-out;
+}
+
+/* === STATUS BADGE ENTRANCE === */
+@keyframes statusSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+        max-height: 0;
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 40px;
+    }
+}
+
+.group-povuxa .party-status {
+    animation: statusSlideDown 0.3s ease-out;
+}

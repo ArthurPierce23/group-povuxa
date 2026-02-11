@@ -1,0 +1,151 @@
+<form class="party-panel-form" autocomplete="off">
+
+  {{!-- Заголовок с количеством участников --}}
+  <header class="panel-header">
+    <h3>
+      <i class="fas fa-users"></i>
+      {{localize "GROUP_POVUXA.Panel.SelectedTokens"}}
+    </h3>
+    {{#if hasMembers}}
+    <span class="members-count">{{members.length}}</span>
+    {{/if}}
+  </header>
+
+  {{!-- Статус группы --}}
+  {{#if isPartyActive}}
+  <div class="party-status active">
+    <i class="fas fa-check-circle"></i>
+    <span>{{localize "GROUP_POVUXA.Panel.GroupActive"}}</span>
+  </div>
+  {{/if}}
+
+  {{!-- Список участников --}}
+  {{#if hasMembers}}
+  <ol class="members-list">
+    {{#each members}}
+    <li class="member-item party-member-draggable {{this.role}}" data-token-id="{{this.tokenId}}"
+      data-actor-id="{{this.actorId}}" title="{{localize 'GROUP_POVUXA.Tooltips.DragToReorder'}}">
+
+      {{!-- Хватка для перетаскивания --}}
+      <div class="drag-handle">
+        <i class="fas fa-grip-vertical"></i>
+      </div>
+
+      {{!-- Порядковый номер --}}
+      <span class="member-order">{{@index}}</span>
+
+      {{!-- Аватар --}}
+      <img class="member-img" src="{{this.img}}" alt="{{this.name}}" width="36" height="36" />
+
+      {{!-- Имя и роль --}}
+      <div class="member-info">
+        <span class="member-name">{{this.name}}</span>
+        <select class="role-select" data-token-id="{{this.tokenId}}">
+          {{#each ../roles}}
+          <option value="{{this.id}}" {{#if (eq this.id ../this.role)}}selected{{/if}}>
+            {{this.name}}
+          </option>
+          {{/each}}
+        </select>
+      </div>
+
+      {{!-- Иконка роли (удалено по просьбе) --}}
+      {{!-- <div class="role-icon">...</div> --}}
+
+      {{!-- Кнопка удаления --}}
+      {{#if ../isPartyActive}}
+      <button type="button" class="remove-member-btn" data-token-id="{{this.tokenId}}"
+        title="{{localize 'GROUP_POVUXA.Tooltips.RightClickToRemove'}}">
+        <i class="fas fa-times"></i>
+      </button>
+      {{/if}}
+    </li>
+    {{/each}}
+  </ol>
+  {{else}}
+  <div class="empty-state">
+    <i class="fas fa-mouse-pointer"></i>
+    <p>{{localize "GROUP_POVUXA.Panel.NoTokensSelected"}}</p>
+  </div>
+  {{/if}}
+
+  {{!-- Сетка расстановки UI --}}
+  <div class="party-grid-container">
+    <div class="party-grid-title">
+      <i class="fas fa-th"></i> {{localize "GROUP_POVUXA.Grid.Title"}}
+      <span class="grid-direction-hint" title="{{localize 'GROUP_POVUXA.Grid.Forward'}}"><i class="fas fa-arrow-up"></i></span>
+    </div>
+    <div class="party-grid">
+      {{!-- 5x5 Grid: координаты (x,y) от -2 до 2 --}}
+      {{#each gridCells}}
+      <div class="grid-cell {{#if this.isCenter}}center-cell{{/if}}" data-grid-x="{{this.x}}" data-grid-y="{{this.y}}">
+        {{#if this.member}}
+        <div class="party-member-draggable" data-token-id="{{this.member.tokenId}}">
+          <img src="{{this.member.img}}" title="{{this.member.name}}">
+        </div>
+        <div class="remove-from-grid" data-token-id="{{this.member.tokenId}}"><i class="fas fa-times"></i></div>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{!-- Выбор шаблона --}}
+  <div class="formation-section">
+    <div class="formation-controls">
+      <select id="formation-select" class="formation-select">
+        <option value="" disabled {{#unless currentFormation}}selected{{/unless}}>{{localize "GROUP_POVUXA.Formations.SelectPrompt"}}</option>
+        {{#each formations}}
+        <option value="{{this.id}}" {{#if (eq this.id ../currentFormation)}}selected{{/if}}>
+          {{this.name}} {{#if this.isCustom}}({{localize "GROUP_POVUXA.Formations.Custom"}}){{/if}}
+        </option>
+        {{/each}}
+      </select>
+
+      <button type="button" class="save-formation-btn icon-btn" title="{{localize 'GROUP_POVUXA.Formations.SaveCurrent'}}">
+        <i class="fas fa-save"></i>
+      </button>
+
+      <button type="button" class="delete-formation-btn icon-btn" title="{{localize 'GROUP_POVUXA.Formations.DeleteSelected'}}">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+  </div>
+
+  {{!-- Кнопки действий --}}
+  <div class="actions-row">
+    {{#if isPartyActive}}
+    {{!-- Группа активна --}}
+    <button type="button" class="disperse-btn action-btn primary"
+      title="{{localize 'GROUP_POVUXA.Actions.Disperse'}} (Shift+D)">
+      <i class="fas fa-expand-arrows-alt"></i>
+    </button>
+
+    <button type="button" class="scatter-btn action-btn danger"
+      title="{{localize 'GROUP_POVUXA.Actions.Scatter'}} (Shift+X)">
+      <i class="fas fa-bolt"></i>
+    </button>
+
+    <button type="button" class="add-selected-btn action-btn secondary"
+      title="{{localize 'GROUP_POVUXA.Actions.AddToken'}}">
+      <i class="fas fa-user-plus"></i>
+    </button>
+    {{else}}
+    {{!-- Группа не активна --}}
+    <button type="button" class="gather-btn action-btn primary" {{#unless hasMembers}}disabled{{/unless}}
+      title="{{localize 'GROUP_POVUXA.Actions.Gather'}} (Shift+G)">
+      <i class="fas fa-compress-arrows-alt"></i> {{localize "GROUP_POVUXA.Actions.Gather"}}
+    </button>
+    {{/if}}
+  </div>
+
+  {{!-- Горячие клавиши (подсказка) --}}
+  <footer class="panel-footer">
+    <small>
+      <kbd>Shift</kbd>+<kbd>G</kbd> {{localize "GROUP_POVUXA.Keybindings.GatherShort"}} ·
+      <kbd>Shift</kbd>+<kbd>D</kbd> {{localize "GROUP_POVUXA.Keybindings.DisperseShort"}} ·
+      <kbd>Shift</kbd>+<kbd>X</kbd> {{localize "GROUP_POVUXA.Keybindings.ScatterShort"}}
+    </small>
+  </footer>
+
+</form>

@@ -1,0 +1,108 @@
+{
+    "GROUP_POVUXA": {
+        "ModuleName": "Group Po'Vuxa — Party Formation",
+        "Panel": {
+            "Title": "Party Formation",
+            "SelectedTokens": "Selected Tokens",
+            "NoTokensSelected": "Select tokens on the scene",
+            "MembersCount": "Members: {count}",
+            "EmptyGroup": "Group is empty",
+            "GroupActive": "Group is active"
+        },
+        "Actions": {
+            "Gather": "Gather Party",
+            "Disperse": "Disperse Party",
+            "AddToken": "Add to Group",
+            "RemoveToken": "Remove from Group",
+            "Scatter": "Emergency Scatter"
+        },
+        "Roles": {
+            "Leader": "Leader",
+            "Scout": "Scout",
+            "Rearguard": "Rearguard",
+            "Member": "Member"
+        },
+        "Formations": {
+            "Title": "Formation Template",
+            "Line": "Line",
+            "Wedge": "Wedge",
+            "Circle": "Circle",
+            "Square": "Square",
+            "Snake": "Snake",
+            "SelectPrompt": "Select formation...",
+            "SaveCurrent": "Save current arrangement",
+            "DeleteSelected": "Delete selected formation",
+            "Custom": "custom",
+            "NameLabel": "Formation name"
+        },
+        "Grid": {
+            "Title": "Arrangement",
+            "Forward": "Forward"
+        },
+        "Stealth": {
+            "Title": "Stealth Mode",
+            "Enable": "Enable Stealth",
+            "Disable": "Disable Stealth",
+            "RollStealth": "Roll Stealth",
+            "WorstResult": "Worst Result: {value}",
+            "GroupSpotted": "The group was spotted!"
+        },
+        "Vision": {
+            "Title": "Group Vision",
+            "Darkvision": "Darkvision: {range} ft.",
+            "PassivePerception": "Passive Perception: {value}",
+            "LightSource": "Light Source: {name}"
+        },
+        "Settings": {
+            "DefaultToken": "Party Token Image",
+            "DefaultTokenHint": "Path to the image for the party container token",
+            "DefaultFormation": "Default Formation",
+            "EnableAnimations": "Enable Animations",
+            "EnableAnimationsHint": "Gather and disperse animations",
+            "ScoutDistance": "Scout Distance (cells)",
+            "RearguardDistance": "Rearguard Distance (cells)",
+            "InheritVision": "Inherit member vision",
+            "InheritLight": "Inherit light sources",
+            "HidePartyActor": "Hide Party Actor",
+            "HidePartyActorHint": "Hides the technical party actor from the sidebar."
+        },
+        "Prompts": {
+            "ScatterConfirm": "Are you sure you want to emergency scatter the party? This will instantly scatter tokens randomly."
+        },
+        "Keybindings": {
+            "Gather": "Gather Party",
+            "GatherHint": "Gather selected tokens into one",
+            "GatherShort": "gather",
+            "Disperse": "Disperse Party",
+            "DisperseHint": "Disperse group around the token",
+            "DisperseShort": "disperse",
+            "Scatter": "Emergency Scatter",
+            "ScatterHint": "Quickly scatter the group (for ambush)",
+            "ScatterShort": "scatter",
+            "OpenPanel": "Open Panel"
+        },
+        "Notifications": {
+            "GatherSuccess": "Party gathered! Members: {count}",
+            "DisperseSuccess": "Party dispersed!",
+            "NoTokensSelected": "Select tokens first!",
+            "NoPartyToken": "Party token not found!",
+            "CannotPlaceAll": "Could not place all members — not enough space!",
+            "TokenAdded": "{name} added to group",
+            "TokenRemoved": "{name} removed from group",
+            "CannotGroupGroups": "Cannot nest groups within groups!",
+            "GroupTokensExcluded": "Group tokens excluded from gathering",
+            "MinTwoTokens": "Group must have at least 2 members!",
+            "GridEmpty": "Grid is empty, nothing to save!",
+            "CannotDeleteDefault": "Only custom formations can be deleted.",
+            "TooFewMembers": "Too few members remaining. Dispersing...",
+            "FormationSaved": "Formation \"{name}\" saved!",
+            "FormationDeleted": "Formation deleted.",
+            "AutoDisperseInfo": "Group is dispersing instead of deletion..."
+        },
+        "Tooltips": {
+            "DragToReorder": "Drag to reorder",
+            "ClickToSetRole": "Click to set role",
+            "RightClickToRemove": "Right-click to remove from group"
+        }
+    }
+}
