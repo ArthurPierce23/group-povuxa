@@ -1,0 +1,579 @@
+/**
+ * Group Po'Vuxa — Party Panel Styles
+ * Adapted for Foundry VTT v13 default light theme
+ */
+
+/* === Panel Root === */
+.group-povuxa.party-panel {
+  --gp-accent: #c2540a;
+  --gp-accent-light: #ea7c28;
+  --gp-accent-bg: rgba(194, 84, 10, 0.08);
+  --gp-accent-border: rgba(194, 84, 10, 0.25);
+  --gp-success: #16a34a;
+  --gp-success-bg: rgba(22, 163, 74, 0.08);
+  --gp-danger: #dc2626;
+  --gp-danger-bg: rgba(220, 38, 38, 0.08);
+  --gp-info: #2563eb;
+  --gp-purple: #7c3aed;
+  --gp-gold: #b45309;
+  --gp-text: #1e293b;
+  --gp-text-secondary: #64748b;
+  --gp-text-dim: #94a3b8;
+  --gp-surface: rgba(0, 0, 0, 0.03);
+  --gp-surface-hover: rgba(0, 0, 0, 0.06);
+  --gp-border: rgba(0, 0, 0, 0.1);
+  --gp-border-hover: rgba(0, 0, 0, 0.2);
+  --gp-radius: 6px;
+  --gp-transition: 0.15s ease;
+}
+
+.group-povuxa .party-panel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+/* === HEADER === */
+.group-povuxa .panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--gp-accent-border);
+}
+
+.group-povuxa .panel-header h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--gp-text);
+}
+
+.group-povuxa .panel-header h3 i {
+  color: var(--gp-accent);
+}
+
+.group-povuxa .members-count {
+  background: var(--gp-accent);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.15rem 0.45rem;
+  border-radius: 10px;
+  min-width: 1.2rem;
+  text-align: center;
+}
+
+/* === STATUS === */
+.group-povuxa .party-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--gp-radius);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.group-povuxa .party-status.active {
+  background: var(--gp-success-bg);
+  border: 1px solid rgba(22, 163, 74, 0.2);
+  color: var(--gp-success);
+}
+
+.group-povuxa .party-status.active i {
+  color: var(--gp-success);
+}
+
+/* === MEMBERS LIST === */
+.group-povuxa .members-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.group-povuxa .member-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.4rem;
+  background: var(--gp-surface);
+  border-radius: var(--gp-radius);
+  cursor: pointer;
+  transition: all var(--gp-transition);
+  border: 1px solid transparent;
+  min-height: 42px;
+}
+
+.group-povuxa .member-item:hover {
+  background: var(--gp-surface-hover);
+  border-color: var(--gp-border);
+}
+
+.group-povuxa .member-item.dragging {
+  opacity: 0.4;
+  background: var(--gp-accent-bg);
+  border-color: var(--gp-accent);
+}
+
+/* Role accents */
+.group-povuxa .member-item.leader {
+  border-left: 3px solid var(--gp-gold);
+}
+
+.group-povuxa .member-item.scout {
+  border-left: 3px solid var(--gp-info);
+}
+
+.group-povuxa .member-item.rearguard {
+  border-left: 3px solid var(--gp-purple);
+}
+
+/* === MEMBER ELEMENTS === */
+.group-povuxa .drag-handle {
+  color: var(--gp-text-dim);
+  cursor: grab;
+  padding: 0 0.1rem;
+  font-size: 0.7rem;
+  opacity: 0.3;
+  transition: opacity var(--gp-transition);
+}
+
+.group-povuxa .member-item:hover .drag-handle {
+  opacity: 0.7;
+}
+
+.group-povuxa .drag-handle:active {
+  cursor: grabbing;
+}
+
+.group-povuxa .member-order {
+  font-size: 0.65rem;
+  color: var(--gp-text-dim);
+  width: 0.9rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.group-povuxa .member-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--gp-border);
+  object-fit: cover;
+  flex-shrink: 0;
+  transition: border-color var(--gp-transition), box-shadow var(--gp-transition);
+}
+
+.group-povuxa .member-item:hover .member-img {
+  border-color: var(--gp-accent);
+}
+
+/* Role avatar rings */
+.group-povuxa .member-item.leader .member-img {
+  border-color: var(--gp-gold);
+  box-shadow: 0 0 0 1px rgba(180, 83, 9, 0.2);
+}
+
+.group-povuxa .member-item.scout .member-img {
+  border-color: var(--gp-info);
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2);
+}
+
+.group-povuxa .member-item.rearguard .member-img {
+  border-color: var(--gp-purple);
+  box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.2);
+}
+
+.group-povuxa .member-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  min-width: 0;
+}
+
+.group-povuxa .member-name {
+  font-weight: 600;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--gp-text);
+}
+
+.group-povuxa .role-select {
+  font-size: 0.65rem;
+  padding: 0.05rem 0.15rem;
+  background: transparent;
+  border: 1px solid var(--gp-border);
+  border-radius: 3px;
+  color: var(--gp-text-secondary);
+  max-width: 85px;
+  cursor: pointer;
+  transition: border-color var(--gp-transition);
+}
+
+.group-povuxa .role-select:hover,
+.group-povuxa .role-select:focus {
+  border-color: var(--gp-accent);
+  outline: none;
+}
+
+.group-povuxa .remove-member-btn {
+  background: transparent;
+  border: none;
+  color: var(--gp-text-dim);
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 50%;
+  transition: all var(--gp-transition);
+  font-size: 0.65rem;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.group-povuxa .remove-member-btn:hover {
+  background: var(--gp-danger-bg);
+  color: var(--gp-danger);
+}
+
+/* === EMPTY STATE === */
+.group-povuxa .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.2rem;
+  color: var(--gp-text-dim);
+}
+
+.group-povuxa .empty-state i {
+  font-size: 1.5rem;
+  opacity: 0.4;
+  color: var(--gp-accent);
+}
+
+.group-povuxa .empty-state p {
+  margin: 0;
+  text-align: center;
+  font-size: 0.78rem;
+}
+
+/* === FORMATION SECTION === */
+.group-povuxa .formation-section {
+  padding: 0.4rem;
+  background: var(--gp-surface);
+  border-radius: var(--gp-radius);
+  border: 1px solid var(--gp-border);
+}
+
+.group-povuxa .formation-controls {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.group-povuxa .formation-select {
+  flex: 1;
+  padding: 0.25rem 0.4rem;
+  background: white;
+  border: 1px solid var(--gp-border);
+  border-radius: var(--gp-radius);
+  color: var(--gp-text);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: border-color var(--gp-transition);
+}
+
+.group-povuxa .formation-select:hover,
+.group-povuxa .formation-select:focus {
+  border-color: var(--gp-accent);
+  outline: none;
+}
+
+.group-povuxa .icon-btn {
+  background: white;
+  border: 1px solid var(--gp-border);
+  color: var(--gp-text-secondary);
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: var(--gp-radius);
+  transition: all var(--gp-transition);
+  padding: 0;
+  font-size: 0.7rem;
+}
+
+.group-povuxa .icon-btn:hover {
+  background: var(--gp-surface-hover);
+  color: var(--gp-text);
+  border-color: var(--gp-border-hover);
+}
+
+.group-povuxa .icon-btn.save-formation-btn:hover {
+  background: var(--gp-success-bg);
+  color: var(--gp-success);
+  border-color: var(--gp-success);
+}
+
+.group-povuxa .icon-btn.delete-formation-btn:hover {
+  background: var(--gp-danger-bg);
+  color: var(--gp-danger);
+  border-color: var(--gp-danger);
+}
+
+/* === ACTION BUTTONS === */
+.group-povuxa .actions-row {
+  display: flex;
+  gap: 0.3rem;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.group-povuxa .action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.7rem;
+  border: none;
+  border-radius: var(--gp-radius);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.8rem;
+  transition: all var(--gp-transition);
+  min-width: 0;
+}
+
+.group-povuxa .action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.group-povuxa .action-btn.primary {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: linear-gradient(180deg, var(--gp-accent-light), var(--gp-accent));
+  color: white;
+  box-shadow: 0 1px 3px rgba(194, 84, 10, 0.3);
+}
+
+.group-povuxa .action-btn.primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, #f08c30, var(--gp-accent-light));
+  box-shadow: 0 2px 8px rgba(194, 84, 10, 0.35);
+  transform: translateY(-1px);
+}
+
+.group-povuxa .action-btn.primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(194, 84, 10, 0.2);
+}
+
+.group-povuxa .action-btn.secondary {
+  background: white;
+  border: 1px solid var(--gp-border);
+  color: var(--gp-text-secondary);
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-size: 0.75rem;
+}
+
+.group-povuxa .action-btn.secondary:hover {
+  background: var(--gp-surface-hover);
+  color: var(--gp-text);
+  border-color: var(--gp-border-hover);
+}
+
+/* Scatter button — compact icon-only */
+.group-povuxa .action-btn.danger {
+  background: white;
+  border: 1px solid var(--gp-border);
+  color: var(--gp-text-dim);
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-size: 0.75rem;
+}
+
+.group-povuxa .action-btn.danger:hover {
+  background: var(--gp-danger-bg);
+  color: var(--gp-danger);
+  border-color: var(--gp-danger);
+}
+
+/* === GRID === */
+.party-grid-container {
+  margin: 0.2rem 0;
+  padding: 0.4rem;
+  background: var(--gp-surface);
+  border: 1px solid var(--gp-border);
+  border-radius: var(--gp-radius);
+}
+
+.party-grid-title {
+  font-size: 0.72rem;
+  margin-bottom: 0.3rem;
+  color: var(--gp-accent);
+  text-align: center;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.party-grid-title .grid-direction-hint {
+  color: var(--gp-text-dim);
+  font-size: 0.65rem;
+}
+
+.party-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 2px;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 3px;
+  border-radius: var(--gp-radius);
+  border: 1px solid var(--gp-border);
+}
+
+.grid-cell {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px dashed rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--gp-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.grid-cell:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.2);
+  border-style: solid;
+}
+
+.grid-cell.center-cell {
+  background: var(--gp-accent-bg);
+  border-color: var(--gp-accent-border);
+  border-style: solid;
+}
+
+.grid-cell.drag-over {
+  background: var(--gp-success-bg);
+  border-color: var(--gp-success);
+  border-style: solid;
+  transform: scale(1.04);
+}
+
+.grid-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.grid-cell .party-member-draggable {
+  width: 100%;
+  height: 100%;
+}
+
+.grid-cell .remove-from-grid {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  background: var(--gp-danger);
+  color: white;
+  width: 12px;
+  height: 12px;
+  font-size: 7px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-bottom-left-radius: 3px;
+  cursor: pointer;
+}
+
+.grid-cell:hover .remove-from-grid {
+  display: flex;
+}
+
+/* === FOOTER === */
+.group-povuxa .panel-footer {
+  text-align: center;
+  color: var(--gp-text-dim);
+  padding-top: 0.3rem;
+  border-top: 1px solid var(--gp-border);
+  font-size: 0.65rem;
+  line-height: 1.5;
+}
+
+.group-povuxa .panel-footer kbd {
+  background: white;
+  border: 1px solid var(--gp-border);
+  padding: 0.05rem 0.25rem;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.6rem;
+  color: var(--gp-text-secondary);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06);
+}
+
+/* === SCROLLBAR === */
+.group-povuxa .members-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.group-povuxa .members-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.group-povuxa .members-list::-webkit-scrollbar-thumb {
+  background: rgba(194, 84, 10, 0.2);
+  border-radius: 2px;
+}
+
+.group-povuxa .members-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(194, 84, 10, 0.4);
+}
+
+/* === HUD BUTTON === */
+.group-povuxa-hud {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all var(--gp-transition);
+}
+
+.group-povuxa-hud:hover {
+  background: rgba(194, 84, 10, 0.5);
+  border-color: var(--gp-accent);
+}

@@ -1,0 +1,36 @@
+# Foundry VTT модуль - игнорируемые файлы
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Node.js (если понадобится сборка)
+node_modules/
+package-lock.json
+npm-debug.log
+
+# Логи
+*.log
+logs/
+
+# Временные файлы
+*.tmp
+*.temp
+*.bak
+*~
+
+# Архивы релизов (создаются при сборке)
+*.zip
+*.tar.gz
+
+# Скомпилированные файлы (если TypeScript)
+dist/
+build/
+*.js.map

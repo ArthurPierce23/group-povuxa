@@ -1,0 +1,108 @@
+{
+    "GROUP_POVUXA": {
+        "ModuleName": "Group Po'Vuxa — Походный Строй",
+        "Panel": {
+            "Title": "Походный строй",
+            "SelectedTokens": "Выбранные токены",
+            "NoTokensSelected": "Выберите токены на сцене",
+            "MembersCount": "Участников: {count}",
+            "EmptyGroup": "Группа пуста",
+            "GroupActive": "Группа активна"
+        },
+        "Actions": {
+            "Gather": "Собрать группу",
+            "Disperse": "Распустить группу",
+            "AddToken": "Добавить в группу",
+            "RemoveToken": "Удалить из группы",
+            "Scatter": "Экстренное рассеивание"
+        },
+        "Roles": {
+            "Leader": "Лидер",
+            "Scout": "Разведчик",
+            "Rearguard": "Арьергард",
+            "Member": "Участник"
+        },
+        "Formations": {
+            "Title": "Шаблон построения",
+            "Line": "Линия",
+            "Wedge": "Клин",
+            "Circle": "Круг",
+            "Square": "Каре",
+            "Snake": "Змейка",
+            "SelectPrompt": "Выберите строй...",
+            "SaveCurrent": "Сохранить текущую расстановку",
+            "DeleteSelected": "Удалить выбранный шаблон",
+            "Custom": "свой",
+            "NameLabel": "Название шаблона"
+        },
+        "Grid": {
+            "Title": "Расстановка",
+            "Forward": "Вперёд"
+        },
+        "Stealth": {
+            "Title": "Режим скрытности",
+            "Enable": "Включить скрытность",
+            "Disable": "Отключить скрытность",
+            "RollStealth": "Бросок скрытности",
+            "WorstResult": "Худший результат: {value}",
+            "GroupSpotted": "Группа обнаружена!"
+        },
+        "Vision": {
+            "Title": "Зрение группы",
+            "Darkvision": "Тёмное зрение: {range} фт.",
+            "PassivePerception": "Пассивное восприятие: {value}",
+            "LightSource": "Источник света: {name}"
+        },
+        "Settings": {
+            "DefaultToken": "Изображение токена группы",
+            "DefaultTokenHint": "Путь к изображению контейнерного токена группы",
+            "DefaultFormation": "Построение по умолчанию",
+            "EnableAnimations": "Включить анимации",
+            "EnableAnimationsHint": "Анимации сбора и роспуска",
+            "ScoutDistance": "Дистанция разведчика (клетки)",
+            "RearguardDistance": "Дистанция арьергарда (клетки)",
+            "InheritVision": "Наследовать зрение участников",
+            "InheritLight": "Наследовать источники света",
+            "HidePartyActor": "Скрыть актера группы",
+            "HidePartyActorHint": "Скрывает технического актера группы из боковой панели."
+        },
+        "Prompts": {
+            "ScatterConfirm": "Вы уверены, что хотите экстренно рассеять группу? Токены будут мгновенно разбросаны случайно."
+        },
+        "Keybindings": {
+            "Gather": "Собрать группу",
+            "GatherHint": "Собрать выбранные токены в один",
+            "GatherShort": "собрать",
+            "Disperse": "Распустить группу",
+            "DisperseHint": "Распустить группу вокруг токена",
+            "DisperseShort": "распустить",
+            "Scatter": "Экстренное рассеивание",
+            "ScatterHint": "Быстро рассеять группу (засада)",
+            "ScatterShort": "рассеять",
+            "OpenPanel": "Открыть панель"
+        },
+        "Notifications": {
+            "GatherSuccess": "Группа собрана! Участников: {count}",
+            "DisperseSuccess": "Группа распущена!",
+            "NoTokensSelected": "Сперва выберите токены!",
+            "NoPartyToken": "Токен группы не найден!",
+            "CannotPlaceAll": "Не удалось разместить всех участников — не хватает места!",
+            "TokenAdded": "{name} добавлен(а) в группу",
+            "TokenRemoved": "{name} удалён(а) из группы",
+            "CannotGroupGroups": "Нельзя вкладывать группы друг в друга!",
+            "GroupTokensExcluded": "Токены-группы исключены из сбора",
+            "MinTwoTokens": "Группа должна состоять минимум из 2 существ!",
+            "GridEmpty": "Сетка пуста, нечего сохранять!",
+            "CannotDeleteDefault": "Можно удалять только пользовательские шаблоны.",
+            "TooFewMembers": "В группе осталось слишком мало участников. Роспуск...",
+            "FormationSaved": "Шаблон \"{name}\" сохранён!",
+            "FormationDeleted": "Шаблон удалён.",
+            "AutoDisperseInfo": "Группа распускается вместо удаления..."
+        },
+        "Tooltips": {
+            "DragToReorder": "Перетащите для изменения порядка",
+            "ClickToSetRole": "Нажмите для назначения роли",
+            "RightClickToRemove": "ПКМ для удаления из группы"
+        }
+    }
+}
