@@ -633,14 +633,18 @@ export class PartyManager {
      */
     _calculateBestVision(tokens) {
         if (!game.settings.get(MODULE_ID, 'inheritVision')) {
-            return { enabled: true, range: 0, visionMode: 'basic' };
+            return { enabled: false, range: 0, visionMode: 'basic' };
         }
 
         let maxRange = 0;
         let hasDarkvision = false;
+        let hasEnabledVision = false;
 
         for (const token of tokens) {
             const sight = token.document.sight;
+            if (!sight.enabled) continue;
+
+            hasEnabledVision = true;
             if (sight.range > maxRange) {
                 maxRange = sight.range;
             }
@@ -650,7 +654,40 @@ export class PartyManager {
         }
 
         return {
-            enabled: true,
+            enabled: hasEnabledVision,
+            range: maxRange,
+            visionMode: hasDarkvision ? 'darkvision' : 'basic'
+        };
+    }
+
+    /**
+     * Same as _calculateBestVision, but works from saved member data.
+     * This is used after add/remove member operations when live token docs are gone.
+     */
+    _calculateBestVisionFromMembers(members) {
+        if (!game.settings.get(MODULE_ID, 'inheritVision')) {
+            return { enabled: false, range: 0, visionMode: 'basic' };
+        }
+
+        let maxRange = 0;
+        let hasDarkvision = false;
+        let hasEnabledVision = false;
+
+        for (const member of members) {
+            const vision = member?.vision ?? {};
+            if (!vision.enabled) continue;
+
+            hasEnabledVision = true;
+            if ((vision.range ?? 0) > maxRange) {
+                maxRange = vision.range;
+            }
+            if (vision.visionMode === 'darkvision') {
+                hasDarkvision = true;
+            }
+        }
+
+        return {
+            enabled: hasEnabledVision,
             range: maxRange,
             visionMode: hasDarkvision ? 'darkvision' : 'basic'
         };
@@ -688,6 +725,68 @@ export class PartyManager {
             color: lightColor,
             animation: lightAnimation
         };
+    }
+
+    /**
+     * Same as _calculateCombinedLight, but uses saved member data.
+     */
+    _calculateCombinedLightFromMembers(members) {
+        if (!game.settings.get(MODULE_ID, 'inheritLight')) {
+            return { dim: 0, bright: 0, color: null, animation: { type: null } };
+        }
+
+        let maxDim = 0;
+        let maxBright = 0;
+        let lightColor = null;
+        let lightAnimation = { type: null };
+
+        for (const member of members) {
+            const light = member?.light ?? {};
+            if ((light.dim ?? 0) > maxDim) {
+                maxDim = light.dim;
+                lightColor = light.color ?? null;
+                lightAnimation = light.animation ?? { type: null };
+            }
+            if ((light.bright ?? 0) > maxBright) {
+                maxBright = light.bright;
+            }
+        }
+
+        return {
+            dim: maxDim,
+            bright: maxBright,
+            color: lightColor,
+            animation: lightAnimation
+        };
+    }
+
+    /**
+     * Merge ownership from all member actors so players keep control and vision
+     * when the group is replaced by a technical party actor.
+     */
+    _calculatePartyOwnershipFromMembers(members) {
+        const mergedOwnership = { default: 0 };
+
+        for (const member of members) {
+            const actor = member?.actorId ? game.actors.get(member.actorId) : null;
+            const ownership = actor?.ownership;
+            if (!ownership) continue;
+
+            for (const [userId, level] of Object.entries(ownership)) {
+                if (typeof level !== 'number') continue;
+                const currentLevel = mergedOwnership[userId] ?? 0;
+                mergedOwnership[userId] = Math.max(currentLevel, level);
+            }
+        }
+
+        return mergedOwnership;
+    }
+
+    async _syncPartyActorOwnership(partyActor, members) {
+        if (!partyActor) return;
+
+        const ownership = this._calculatePartyOwnershipFromMembers(members);
+        await partyActor.update({ ownership });
     }
 
     async _getOrCreatePartyActor() {
@@ -762,6 +861,7 @@ export class PartyManager {
 
         // Получаем или создаем технического актера для группы
         const partyActor = await this._getOrCreatePartyActor();
+        await this._syncPartyActorOwnership(partyActor, members);
 
         // Привязываем к сетке (v13 API: point, behavior)
         const snappedPosition = canvas.grid.getSnappedPoint(
@@ -1097,27 +1197,24 @@ export class PartyManager {
      * Обновить зрение/свет токена группы после изменения состава
      */
     async _updatePartyTokenVision(partyToken, members) {
-        // Пересобираем токены из актёров для расчёта
-        // (упрощённо — используем сохранённые данные)
-        let maxRange = 0;
-        let maxDim = 0;
-        let maxBright = 0;
+        const vision = this._calculateBestVisionFromMembers(members);
+        const light = this._calculateCombinedLightFromMembers(members);
+        const partyActor = partyToken?.document?.actorId ? game.actors.get(partyToken.document.actorId) : null;
 
-        for (const member of members) {
-            if (member.vision.range > maxRange) {
-                maxRange = member.vision.range;
-            }
-            if (member.light.dim > maxDim) {
-                maxDim = member.light.dim;
-            }
-            if (member.light.bright > maxBright) {
-                maxBright = member.light.bright;
-            }
-        }
+        await this._syncPartyActorOwnership(partyActor, members);
 
         await partyToken.document.update({
-            sight: { range: maxRange },
-            light: { dim: maxDim, bright: maxBright }
+            sight: {
+                enabled: vision.enabled,
+                range: vision.range,
+                visionMode: vision.visionMode
+            },
+            light: {
+                dim: light.dim,
+                bright: light.bright,
+                color: light.color,
+                animation: light.animation
+            }
         });
     }
 

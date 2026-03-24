@@ -1,0 +1,14 @@
+{
+  "name": "group-povuxa-tooling",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "check": "powershell -NoProfile -ExecutionPolicy Bypass -File ./tools/run-ci-checks.ps1",
+    "check:manifest": "node ./tools/validate-manifest.mjs",
+    "check:js": "powershell -NoProfile -ExecutionPolicy Bypass -File ./tools/check-js.ps1",
+    "build:release": "powershell -NoProfile -ExecutionPolicy Bypass -File ./tools/build-release.ps1"
+  }
+}

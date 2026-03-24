@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate tagged release
+        run: npm run check -- --tag "${{ github.ref_name }}"
+
+      - name: Build release assets
+        run: npm run build:release -- --tag "${{ github.ref_name }}"
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/release/module.json
+            dist/release/module.zip
+          generate_release_notes: true
+          fail_on_unmatched_files: true
